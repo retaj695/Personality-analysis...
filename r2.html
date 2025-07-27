@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <title>الاسئلة</title>
+  <style>
+    body {
+      direction: rtl;
+      background-color: #f6f1f1;
+      padding: 100px;
+      font-size: 1em;
+      color: #333;
+      font-family: Arial, sans-serif;
+    }
+
+    .question {
+      margin-bottom: 20px;
+    }
+
+    #result {
+      margin-top: 30px;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #2b2b2b;
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .contact-button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 1em;
+      transition: background-color 0.3s ease;
+    }
+
+    .contact-button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+<div id="quiz" class="section">
+  <h2>📝 اختبار الشخصية</h2>
+
+  <div class="question">
+    <p>1. كيف تتعامل مع التحديات؟</p>
+    <label><input type="radio" name="q1" value="A" /> أواجهها بحزم</label><br />
+    <label><input type="radio" name="q1" value="B" /> أضحك وأهدئ الموقف</label><br />
+    <label><input type="radio" name="q1" value="C" /> أفكر وأحلل بهدوء</label><br />
+    <label><input type="radio" name="q1" value="D" /> أجرب شيئًا جديدًا</label>
+  </div>
+
+  <div class="question">
+    <p>2. وقت فراغك تقضيه عادةً في:</p>
+    <label><input type="radio" name="q2" value="C" /> قراءة أو تعلم شيء جديد</label><br />
+    <label><input type="radio" name="q2" value="B" /> الخروج مع الأصدقاء</label><br />
+    <label><input type="radio" name="q2" value="A" /> تنظيم مهامي</label><br />
+    <label><input type="radio" name="q2" value="D" /> تجربة مغامرة جديدة</label>
+  </div>
+
+  <div class="question">
+    <p>3. أي من هذه يصفك أكثر؟</p>
+    <label><input type="radio" name="q3" value="B" /> عفوي ومرح</label><br />
+    <label><input type="radio" name="q3" value="A" /> حازم ومنظم</label><br />
+    <label><input type="radio" name="q3" value="C" /> هادئ ومراقب</label><br />
+    <label><input type="radio" name="q3" value="D" /> جريء ومغامر</label>
+  </div>
+
+  <div class="question">
+    <p>4. أكثر نوع أفلام تحبه:</p>
+    <label><input type="radio" name="q4" value="D" /> الأكشن والمغامرات</label><br />
+    <label><input type="radio" name="q4" value="C" /> الغموض والتفكير</label><br />
+    <label><input type="radio" name="q4" value="B" /> الكوميديا والضحك</label><br />
+    <label><input type="radio" name="q4" value="A" /> الواقعية والوثائقيات</label>
+  </div>
+
+  <div class="question">
+    <p>5. أكثر شيء يزعجك هو:</p>
+    <label><input type="radio" name="q5" value="C" /> الضجيج والسطحية</label><br />
+    <label><input type="radio" name="q5" value="B" /> الجدية والملل</label><br />
+    <label><input type="radio" name="q5" value="A" /> الفوضى</label><br />
+    <label><input type="radio" name="q5" value="D" /> الروتين</label>
+  </div>
+
+  <button id="getResultBtn">احصل على نتيجتك</button>
+  <div id="result"></div>
+</div>
+
+<script>
+  document.getElementById('getResultBtn').addEventListener('click', () => {
+    const scores = { A: 0, B: 0, C: 0, D: 0 };
+    
+    for (let i = 1; i <= 5; i++) {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      if (!selected) {
+        document.getElementById('result').textContent = 'يرجى الإجابة على جميع الأسئلة ';
+        return;
+      }
+      scores[selected.value]++;
+    }
+
+    let maxType = 'A';
+    for (const key in scores) {
+      if (scores[key] > scores[maxType]) {
+        maxType = key;
+      }
+    }
+
+    let resultText = '';
+    switch (maxType) {
+      case 'A':
+        resultText = ' شخصية قيادية: تحب التنظيم والتخطيط وتوجيه الآخرين.';
+        break;
+      case 'B':
+        resultText = ' شخصية مرحة: تحب المرح والتفاعل وتنشر الطاقة الإيجابية.';
+        break;
+      case 'C':
+        resultText = ' شخصية مفكرة: تحب التأمل والتحليل وتبحث عن المعنى.';
+        break;
+      case 'D':
+        resultText = ' شخصية مغامرة: تحب التحديات والتجديد وخوض التجارب.';
+        break;
+    }
+
+    document.getElementById('result').innerHTML = `
+      <p><strong>نتيجتك:</strong> ${resultText}</p>
+      <a href="https://www.linkedin.com/in/retaj-y-al-ansari-8466b233b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" class="contact-button" target="_blank">
+  <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" style="width:20px; vertical-align:middle; margin-left:8px;" />
+  للتواصل اضغط هنا
+</a>
+
+    `;
+  });
+</script>
+
+</body>
+</html>
+
